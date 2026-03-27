@@ -1,1 +1,7 @@
-javascript:alert()
+<html>
+  <body>
+  </body>
+  <script>
+    javascript:alert()
+  </script>
+</html>
