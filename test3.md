@@ -1,1 +1,1 @@
-<blob:slack.abc>|img>
+<blob:slack.abc>
