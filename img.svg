@@ -1,3 +1,9 @@
-<<svg xmlns="http://www.w3.org/2000/svg">
-    <text x="10" y="20" onload="alert('XSS')">Text</text>
-</svg>>
+<svg width="300" height="80" xmlns="http://www.w3.org/2000/svg">
+  <a href="https://webhook.site/a837b1ab-99df-4de1-bc87-2ff857384001" target="_blank">
+    <rect x="10" y="10" width="280" height="60" rx="10" fill="#1a1a1a"/>
+    <text x="150" y="45" font-family="sans-serif" font-size="16"
+          fill="white" text-anchor="middle" dominant-baseline="middle">
+      Click Here
+    </text>
+  </a>
+</svg>
